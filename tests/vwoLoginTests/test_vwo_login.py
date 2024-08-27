@@ -1,9 +1,8 @@
 import time
-
 import allure
 import pytest
 from selenium import webdriver
-
+from tests.constants.constants import Constants
 from tests.pageObejcts.pom.dashboardPage import DashboardPage
 from tests.pageObejcts.pom.loginPage import LoginPage
 
@@ -12,7 +11,7 @@ from tests.pageObejcts.pom.loginPage import LoginPage
 def setup():
     driver = webdriver.Chrome()
     driver.maximize_window()
-    driver.get("https://app.vwo.com")
+    driver.get(Constants.app_url())
     return driver
 
 
@@ -22,7 +21,7 @@ def setup():
 def test_vwo_login_negative(setup):
     login_page = LoginPage(driver=setup)
     login_page.login_to_vwo(email="vimalpatel7449@gmail.com", pwd="Abc@12456")
-    time.sleep(2)
+    time.sleep(20)
     error_msg_element = login_page.get_error_message_text()
     assert error_msg_element == "Your email, password, IP address or location did not match"
 
@@ -33,5 +32,6 @@ def test_vwo_login_negative(setup):
 def test_vwo_login_positive(setup):
     login_page = LoginPage(driver=setup)
     login_page.login_to_vwo(email="vimalpatel7449@gmail.com", pwd="Abc@123456")
+    time.sleep(20)
     dashboardPage = DashboardPage(driver=setup)
     assert "Vimal Patel" in dashboardPage.user_logged_in_text()

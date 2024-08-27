@@ -15,7 +15,7 @@
 
 ### Folder Structure
 
-
+pytest -n auto tests/test/vwoLoginTests/test_vwo_login.py --alluredir=allure-results
 ### CI/CD Run
 
 

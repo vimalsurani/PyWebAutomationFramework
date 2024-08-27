@@ -1,18 +1,21 @@
 from selenium.webdriver.common.by import By
-
 from tests.utils.commom_utils import webdriver_wait
 
 
-class LoginPage:
+# TODO - 5. Class and Object
+class LoginPage:  # TODO - 4. Encapsulation
 
-    def __init__(self, driver):
+    def __init__(self, driver):  # TODO - 6. Constructor
         self.driver = driver
+
+    # Page Locators
 
     email_address_textbox = (By.ID, "login-username")
     password_textbox = (By.ID, "login-password")
     sign_in_button = (By.XPATH, "//button[@id='js-login-btn']")
     error_message = (By.CSS_SELECTOR, "#js-notification-box-msg")
 
+    # Page Actions
     def get_email_address(self):
         return self.driver.find_element(*LoginPage.email_address_textbox)
 
@@ -23,7 +26,7 @@ class LoginPage:
         return self.driver.find_element(*LoginPage.sign_in_button)
 
     def get_error_message(self):
-        webdriver_wait(driver=self.driver, element_tuple=self.email_address_textbox, timeout=5)
+        webdriver_wait(driver=self.driver, element_tuple=self.email_address_textbox, timeout=20)
         return self.driver.find_element(*LoginPage.error_message)
 
     def login_to_vwo(self, email, pwd):
@@ -33,5 +36,3 @@ class LoginPage:
 
     def get_error_message_text(self):
         return self.get_error_message().text
-
-
