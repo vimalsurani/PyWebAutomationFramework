@@ -54,6 +54,47 @@
 
 ```pytest -n auto tests/vwoLoginTests/test_vwo_login.py```
 
+### How to run via Jenkins(CI/CD)
+
+![img_1.png](img_1.png)
+
+- Jenkins Run Process
+- Install the Jenkins - jenkins download
+- Install the JDK (open JDK) https://jdk.java.net/21/
+- Set it into the Global Config - http://localhost:8080/manage/configureTools/
+- Install the Plugins - http://localhost:8080/manage/pluginManager/
+  - Allure
+  - HTML Report
+- GITHUB - Repo - https://github.com/vimalsurani/PyWebAutomationFramewor.git
+
+## Build and Test Automation
+
+```batch
+@echo off
+
+:: Set the Python path
+set "PYTHON_PATH=C:\Users\ViMS\AppData\Local\Programs\Python\Python312"
+set "SCRIPTS_PATH=%PYTHON_PATH%\Scripts"
+set PATH=%PATH%;%PYTHON_PATH%;%SCRIPTS_PATH%
+
+:: Install dependencies
+pip install -r requirements.txt
+
+:: Run tests and generate Allure results
+pytest --alluredir=allure-results
+
+:: Check if the allure-results directory exists
+if exist "allure-results" (
+    echo "Generating Allure report..."
+    C:\ProgramData\Jenkins\.jenkins\tools\ru.yandex.qatools.allure.jenkins.tools.AllureCommandlineInstallation\Allure\bin\allure.bat generate "allure-results" -c -o "allure-report"
+    echo "Allure report generated."
+) else (
+    echo "No allure-results found. Skipping report generation."
+)
+
+exit /b 0
+
+
 
 
 
